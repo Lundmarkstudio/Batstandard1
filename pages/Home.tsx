@@ -100,7 +100,7 @@ const Home: React.FC = () => {
                 <Logo size={40} />
                 <div className="h-[2px] flex-grow bg-slate-200"></div>
               </div>
-              <h2 className="text-4xl md:text-5xl font-black text-slate-900 mb-8 leading-tight uppercase tracking-tighter italic">Бид стандартаас <br/>давсан чанарыг нийлүүлнэ</h2>
+              <h2 className="text-4xl md:text-5xl font-black text-slate-900 mb-8 leading-tight uppercase tracking-tighter italic">Стандартаас <br/>давсан чанар</h2>
               <div className="space-y-6 text-slate-600 mb-10">
                 <p className="leading-relaxed">
                   "Бат Стандарт" ХХК нь Монгол Улсын эрчим хүчний дэд бүтцийг бэхжүүлэх зорилготойгоор анкер тулгуурын болон дэд станцын суурийн үйлдвэрлэлийг олон улсын түвшинд гүйцэтгэж байна.
