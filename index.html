@@ -9,6 +9,7 @@
     <script>
       window.process = window.process || { env: { API_KEY: "" } };
     </script>
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
@@ -24,47 +25,17 @@
                 accent: '#3B82F6',
                 light: '#F8FAFC',
               }
-            },
-            borderRadius: {
-              'none': '0',
-              'sm': '2px',
-              'DEFAULT': '4px',
-              'md': '6px',
-              'lg': '8px',
             }
           }
         }
       }
     </script>
+    
     <style>
         body { 
           font-family: Tahoma, Verdana, Segoe UI, sans-serif; 
-          -webkit-font-smoothing: antialiased; 
           background-color: white;
           margin: 0;
-        }
-        @keyframes slow-zoom {
-            0% { transform: scale(1); }
-            100% { transform: scale(1.05); }
-        }
-        .animate-slow-zoom {
-            animation: slow-zoom 20s ease-in-out infinite alternate;
-        }
-        .logo-stripes {
-          background: repeating-linear-gradient(
-            0deg,
-            #2C4696,
-            #2C4696 1px,
-            transparent 1px,
-            transparent 4px
-          );
-        }
-        .bg-grid {
-          background-image: radial-gradient(#2C4696 0.5px, transparent 0.5px);
-          background-size: 24px 24px;
-        }
-        img {
-          background-color: #f1f5f9;
         }
         #initial-loader {
           position: fixed;
@@ -76,47 +47,63 @@
           z-index: 1000;
           transition: opacity 0.5s ease;
         }
+        @keyframes slow-zoom {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.05); }
+        }
+        .animate-slow-zoom {
+            animation: slow-zoom 20s ease-in-out infinite alternate;
+        }
+        .logo-stripes {
+          background: repeating-linear-gradient(0deg, #2C4696, #2C4696 1px, transparent 1px, transparent 4px);
+        }
+        .bg-grid {
+          background-image: radial-gradient(#2C4696 0.5px, transparent 0.5px);
+          background-size: 24px 24px;
+        }
     </style>
-<script type="importmap">
+
+    <script type="importmap">
 {
   "imports": {
-    "react": "https://esm.sh/react@^19.2.4",
-    "react-dom": "https://esm.sh/react-dom@^19.2.4",
-    "react-dom/client": "https://esm.sh/react-dom@^19.2.4/client",
-    "react-router-dom": "https://esm.sh/react-router-dom@^7.13.0",
-    "@google/genai": "https://esm.sh/@google/genai@^1.40.0",
+    "react": "https://esm.sh/react@19.0.0",
+    "react-dom": "https://esm.sh/react-dom@19.0.0",
+    "react-dom/client": "https://esm.sh/react-dom@19.0.0/client",
+    "react-router-dom": "https://esm.sh/react-router-dom@7.1.0?deps=react@19.0.0",
+    "@google/genai": "https://esm.sh/@google/genai@1.40.0",
     "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
-    "react/": "https://esm.sh/react@^19.2.4/"
+    "react/": "https://esm.sh/react@^19.2.4/",
+    "vite": "https://esm.sh/vite@^7.3.1",
+    "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.1.4"
   }
 }
 </script>
 </head>
-<body class="bg-white text-slate-900 selection:bg-brand-blue selection:text-white">
+<body class="bg-white text-slate-900">
     <div id="initial-loader">
       <div class="flex flex-col items-center">
         <div class="w-12 h-12 border-4 border-brand-blue border-t-transparent rounded-full animate-spin"></div>
-        <p class="mt-4 text-[10px] font-black uppercase tracking-widest text-brand-blue">Ачаалж байна...</p>
+        <p class="mt-4 text-[10px] font-black uppercase tracking-widest text-brand-blue">Уншиж байна...</p>
       </div>
     </div>
     
     <div id="root"></div>
 
-    <script type="module">
-      // Loader-ийг удирдах скрипт
+    <!-- esm.sh/run handles the TSX transpilation and module loading in the browser -->
+    <script type="module" src="https://esm.sh/run"></script>
+    <script type="text/tsx" src="./index.tsx"></script>
+
+    <script>
+      // Management of the loading screen
       window.addEventListener('load', () => {
         const loader = document.getElementById('initial-loader');
         if (loader) {
-          loader.style.opacity = '0';
-          setTimeout(() => loader.remove(), 500);
+          setTimeout(() => {
+            loader.style.opacity = '0';
+            setTimeout(() => loader.remove(), 500);
+          }, 800);
         }
       });
-      
-      // Алдааг дэлгэцэнд харуулах (debug хийхэд тусална)
-      window.onerror = function(msg, url, line, col, error) {
-        console.error("Global error: ", msg, " at ", url, ":", line);
-      };
     </script>
-    <!-- index.tsx-ийг энд гар аргаар дуудах шаардлагагүй, 
-         манай орчны build систем үүнийг автоматаар удирддаг. -->
 </body>
 </html>

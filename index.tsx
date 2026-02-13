@@ -1,25 +1,26 @@
 
 import React from 'react';
-import ReactDOM from 'react-dom/client';
+import { createRoot } from 'react-dom/client';
 import App from './App';
 
-const rootElement = document.getElementById('root');
+const startApp = () => {
+  const rootElement = document.getElementById('root');
 
-if (!rootElement) {
-  console.error("Fatal: Could not find root element. The HTML structure might be corrupted.");
-} else {
+  if (!rootElement) {
+    console.error("Fatal: Root element not found");
+    return;
+  }
+
   try {
-    const root = ReactDOM.createRoot(rootElement);
+    const root = createRoot(rootElement);
     root.render(
       <React.StrictMode>
         <App />
       </React.StrictMode>
     );
   } catch (err) {
-    console.error("React Rendering Error:", err);
-    rootElement.innerHTML = `<div style="padding: 20px; text-align: center; font-family: sans-serif;">
-      <h2>Алдаа гарлаа</h2>
-      <p>Аппликейшн ачаалахад алдаа гарлаа. Консол дээрх алдааг шалгана уу.</p>
-    </div>`;
+    console.error("React Render Error:", err);
   }
-}
+};
+
+startApp();
