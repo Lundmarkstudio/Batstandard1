@@ -5,6 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bat Standart LLC | Бат Стандарт ХХК</title>
+    <!-- GitHub Pages-д зориулсан process shim -->
+    <script>
+      window.process = window.process || { env: { API_KEY: "" } };
+    </script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
@@ -36,6 +40,7 @@
         body { 
           font-family: Tahoma, Verdana, Segoe UI, sans-serif; 
           -webkit-font-smoothing: antialiased; 
+          background-color: white;
         }
         @keyframes slow-zoom {
             0% { transform: scale(1); }
@@ -58,22 +63,55 @@
           background-size: 24px 24px;
         }
         img {
-          background-color: #f1f5f9; /* Slate-100 placeholder */
+          background-color: #f1f5f9;
+        }
+        #initial-loader {
+          position: fixed;
+          inset: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: white;
+          z-index: 1000;
+          transition: opacity 0.5s ease;
         }
     </style>
 <script type="importmap">
 {
   "imports": {
     "react": "https://esm.sh/react@^19.2.4",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
-    "react/": "https://esm.sh/react@^19.2.4/",
+    "react-dom": "https://esm.sh/react-dom@^19.2.4",
+    "react-dom/client": "https://esm.sh/react-dom@^19.2.4/client",
+    "react-router-dom": "https://esm.sh/react-router-dom@^7.13.0",
     "@google/genai": "https://esm.sh/@google/genai@^1.40.0",
-    "react-router-dom": "https://esm.sh/react-router-dom@^7.13.0"
+    "react/": "https://esm.sh/react@^19.2.4/",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.4/"
   }
 }
 </script>
 </head>
 <body class="bg-white text-slate-900 selection:bg-brand-blue selection:text-white">
+    <div id="initial-loader">
+      <div class="flex flex-col items-center">
+        <div class="w-12 h-12 border-4 border-brand-blue border-t-transparent rounded-full animate-spin"></div>
+        <p class="mt-4 text-[10px] font-black uppercase tracking-widest text-brand-blue">Ачаалж байна...</p>
+      </div>
+    </div>
+    
     <div id="root"></div>
+
+    <script type="module">
+      // Апп ачаалагдаж дууссаны дараа loader-ийг нуух
+      window.addEventListener('DOMContentLoaded', () => {
+        const loader = document.getElementById('initial-loader');
+        if (loader) {
+          setTimeout(() => {
+            loader.style.opacity = '0';
+            setTimeout(() => loader.remove(), 500);
+          }, 300);
+        }
+      });
+    </script>
+    <script type="module" src="./index.tsx"></script>
 </body>
 </html>

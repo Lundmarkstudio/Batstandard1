@@ -2,7 +2,15 @@
 import { GoogleGenAI } from "@google/genai";
 
 export const getGeminiResponse = async (userPrompt: string) => {
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+  // process.env байхгүй үед алдаа заахаас сэргийлэх
+  const apiKey = typeof process !== 'undefined' ? process.env.API_KEY : (window as any).process?.env?.API_KEY;
+  
+  if (!apiKey) {
+    console.error("Gemini API Key is missing. Check your environment configuration.");
+    return "Уучлаарай, систем тохиргооны алдаа гарлаа. Та утсаар холбогдоно уу.";
+  }
+
+  const ai = new GoogleGenAI({ apiKey });
   try {
     const response = await ai.models.generateContent({
       model: 'gemini-3-flash-preview',
