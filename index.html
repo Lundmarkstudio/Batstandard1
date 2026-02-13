@@ -41,6 +41,7 @@
           font-family: Tahoma, Verdana, Segoe UI, sans-serif; 
           -webkit-font-smoothing: antialiased; 
           background-color: white;
+          margin: 0;
         }
         @keyframes slow-zoom {
             0% { transform: scale(1); }
@@ -84,8 +85,8 @@
     "react-dom/client": "https://esm.sh/react-dom@^19.2.4/client",
     "react-router-dom": "https://esm.sh/react-router-dom@^7.13.0",
     "@google/genai": "https://esm.sh/@google/genai@^1.40.0",
-    "react/": "https://esm.sh/react@^19.2.4/",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.4/"
+    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
+    "react/": "https://esm.sh/react@^19.2.4/"
   }
 }
 </script>
@@ -101,17 +102,21 @@
     <div id="root"></div>
 
     <script type="module">
-      // Апп ачаалагдаж дууссаны дараа loader-ийг нуух
-      window.addEventListener('DOMContentLoaded', () => {
+      // Loader-ийг удирдах скрипт
+      window.addEventListener('load', () => {
         const loader = document.getElementById('initial-loader');
         if (loader) {
-          setTimeout(() => {
-            loader.style.opacity = '0';
-            setTimeout(() => loader.remove(), 500);
-          }, 300);
+          loader.style.opacity = '0';
+          setTimeout(() => loader.remove(), 500);
         }
       });
+      
+      // Алдааг дэлгэцэнд харуулах (debug хийхэд тусална)
+      window.onerror = function(msg, url, line, col, error) {
+        console.error("Global error: ", msg, " at ", url, ":", line);
+      };
     </script>
-    <script type="module" src="./index.tsx"></script>
+    <!-- index.tsx-ийг энд гар аргаар дуудах шаардлагагүй, 
+         манай орчны build систем үүнийг автоматаар удирддаг. -->
 </body>
 </html>
